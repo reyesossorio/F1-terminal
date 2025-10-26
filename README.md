@@ -1,24 +1,25 @@
-# F1 Terminal Tracker
+# F1 Terminal Results Viewer
 
-A terminal-based F1 race tracker written in Go.  
-Follow your favorite drivers in real-time with live positions, gaps, and lap updates directly in your terminal.
+A simple terminal-based application written in Go that fetches and displays the latest Formula 1 session results.  
+Get a quick view of race, qualifying, or practice session standings directly in your terminal.
 
 ## Features
 
-- Real-time display of all drivers in a race.
-- Show current position, lap, and gap to the car ahead.
-- Smooth terminal UI with optional color highlights.
-- Configurable refresh interval and favorite driver highlighting.
+- Fetch latest F1 session results (race, qualifying, practice) using the OpenF1 API.
+- Display driver positions, teams, and times in a clean terminal table.
+- Highlight gaps or fastest laps (optional enhancement).
+- Easy-to-use terminal interface with minimal setup.
 
-## Demo
-
+## Example Output
 ```
 
-POS DRIVER      LAP  GAP
-1   VER        12   -
-2   HAM        12   +1.2s
-3   LEC        12   +0.8s
-4   SAI        12   +1.1s
+Latest Session Results: Bahrain GP - Race
+
+POS DRIVER TEAM TIME
+1 VER Red Bull 1:32:01.123
+2 HAM Mercedes +1.256s
+3 LEC Ferrari +5.432s
+4 SAI Ferrari +8.123s
 ...
 
 ````
@@ -27,17 +28,21 @@ POS DRIVER      LAP  GAP
 
 ### Prerequisites
 
-- [Go 1.20+](https://golang.org/dl/) installed
+- Go 1.20+ installed: [Download Go](https://golang.org/dl/)
 - Terminal that supports ANSI escape codes (most modern terminals do)
 
 ### Installation
 
 ```bash
-git clone https://github.com/reyesossorio/f1-terminal.git
+git clone https://github.com/yourusername/f1-terminal.git
 cd f1-terminal
 go mod tidy
 go run ./cmd/f1-terminal
 ````
+
+### Configuration
+
+If needed, configure API endpoints or refresh intervals in `internal/config/config.go`.
 
 ---
 
@@ -46,9 +51,10 @@ go run ./cmd/f1-terminal
 ```
 f1-terminal/
 ├── cmd/               # Main application entry point
+│   └── main.go
 ├── internal/
-│   ├── api/           # API client & models
-│   ├── race/          # Race state and updater logic
+│   ├── api/           # API client 
+│   ├── models/        # Models
 │   ├── ui/            # Terminal rendering
 │   └── config/        # Configurations
 ├── go.mod
