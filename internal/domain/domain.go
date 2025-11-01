@@ -12,46 +12,47 @@ type DriverSessionResults struct {
 	GapToLeader float64 // floatnumber, -x for number of laps
 }
 
-type SessionResults struct {
+type SessionResult struct {
 	SessionName string
 	SessionType string
 }
 
 type Session struct {
-	MeetingKey       int    `json:"meeting_key"`
 	SessionKey       int    `json:"session_key"`
 	Location         string `json:"location"`
 	DateStart        string `json:"date_start"`
 	DateEnd          string `json:"date_end"`
 	SessionType      string `json:"session_type"`
 	SessionName      string `json:"session_name"`
-	CountryKey       int    `json:"country_key"`
-	CountryCode      string `json:"country_code"`
-	CountryName      string `json:"country_name"`
-	CircuitKey       int    `json:"circuit_key"`
-	CircuitShortName string `json:"circuit_short_name"`
-	GmtOffset        string `json:"gmt_offset"`
-	Year             int    `json:"year"`
 }
 
 type Driver struct {
 	TeamName string `json:"team_name"`
 	Name     string `json:"name_acronym"`
+	Number   int    `json:"driver_number"`
 }
 type DriverResult struct {
-	Dnf          bool    `json:"dnf"`
-	Dns          bool    `json:"dns"`
-	Dnq          bool    `json:"dnq"`
-	DriverNumber int     `json:"driver_number"`
-	Duration     float64 `json:"duration"`
-	GapToLeader  Gap     `json:"gap_to_leader"`
-	NumberOfLaps int     `json:"number_of_laps"`
-	Position     int     `json:"position"`
+	Dnf          bool `json:"dnf"`
+	Dns          bool `json:"dns"`
+	Dnq          bool `json:"dnq"`
+	DriverNumber int  `json:"driver_number"`
+	GapToLeader  Gap  `json:"gap_to_leader"`
+	Position     int  `json:"position"`
 }
 
 type Laps struct {
 	LapDuration float64 `json:"lap_duration"`
 	LapNumber   int     `json:"lap_number"`
+}
+
+type DriverInfo struct {
+	Name         string
+	TeamName     string
+	DriverNumber int
+	GapToLeader  Gap
+	Dnf          bool
+	Dns          bool
+	Dnq          bool
 }
 
 type Gap struct {
