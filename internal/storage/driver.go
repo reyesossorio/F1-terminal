@@ -55,3 +55,19 @@ func (s *DriverStorage) GetDrivers() []*domain.DriverInfo {
 	}
 	return driversList
 }
+
+func (s *DriverStorage) GetDriversNumber(position int, greater bool) []int {
+	var driversNumbers []int
+	for pos, driver := range s.Drivers {
+		if greater {
+			if pos <= position {
+				driversNumbers = append(driversNumbers, driver.DriverNumber)
+			}
+		} else {
+			if pos >= position {
+				driversNumbers = append(driversNumbers, driver.DriverNumber)
+			}
+		}
+	}
+	return driversNumbers
+}

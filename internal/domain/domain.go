@@ -14,16 +14,17 @@ type DriverSessionResults struct {
 
 type SessionResult struct {
 	SessionName string
-	SessionType string
+	Circuit     string
 }
 
 type Session struct {
-	SessionKey       int    `json:"session_key"`
-	Location         string `json:"location"`
-	DateStart        string `json:"date_start"`
-	DateEnd          string `json:"date_end"`
-	SessionType      string `json:"session_type"`
-	SessionName      string `json:"session_name"`
+	SessionKey  int    `json:"session_key"`
+	Location    string `json:"location"`
+	DateStart   string `json:"date_start"`
+	DateEnd     string `json:"date_end"`
+	SessionType string `json:"session_type"`
+	SessionName string `json:"session_name"`
+	CirtuitName string `json:"circuit_short_name"`
 }
 
 type Driver struct {

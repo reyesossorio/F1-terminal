@@ -2,9 +2,13 @@ package main
 
 import (
 	"fmt"
+	"os"
+
+	tea "github.com/charmbracelet/bubbletea"
 
 	"github.com/reyesossorio/f1-terminal/internal/service"
 	"github.com/reyesossorio/f1-terminal/internal/storage"
+	"github.com/reyesossorio/f1-terminal/internal/ui"
 )
 
 func main() {
@@ -13,17 +17,11 @@ func main() {
 
 	service := service.NewRaceService(drivers, sessions)
 
-	err := service.SaveLatestSession()
-	if err != nil {
-		fmt.Println(err)
-	}
+	model := ui.New(service)
+	p := tea.NewProgram(model, tea.WithAltScreen())
 
-	err = service.LazyDriversRaceResults(10, false)
-	if err != nil {
-		fmt.Println(err)
-	}
-	driversInSession := service.GetDriversInSession()
-	for _, driver := range driversInSession{
-		fmt.Println(driver)
+	if _, err := p.Run(); err != nil {
+		fmt.Println("❌ Error ejecutando la UI:", err)
+		os.Exit(1)
 	}
 }

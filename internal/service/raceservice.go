@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"os"
 
 	"github.com/reyesossorio/f1-terminal/internal/domain"
 	"github.com/reyesossorio/f1-terminal/internal/storage"
@@ -41,6 +42,10 @@ func (r *RaceService) SaveDriversInfo(driversInfo []domain.Driver) error {
 	return nil
 }
 
+func (r *RaceService) GetDriversNumbersFromLastSession(position int, greater bool) []int {
+	return r.drivers.GetDriversNumber(position, greater)
+}
+
 func (r *RaceService) LazyDriversInfo(driversNumbers []int) error {
 	query := fmt.Sprintf("https://api.openf1.org/v1/drivers?session_key=%s", "latest")
 	for _, number := range driversNumbers {
@@ -56,7 +61,7 @@ func (r *RaceService) LazyDriversInfo(driversNumbers []int) error {
 	}
 	var drivers []domain.Driver
 	if err := json.NewDecoder(resp.Body).Decode(&drivers); err != nil {
-		fmt.Println(err)
+		return err
 	}
 	return r.SaveDriversInfo(drivers)
 }
@@ -92,8 +97,6 @@ func (r *RaceService) LazyDriversRaceResults(position int, greater bool) error {
 	} else {
 		query += fmt.Sprintf("&position%%3C%%3D%d", position) // <=
 	}
-
-	fmt.Print(query)
 
 	resp, err := http.Get(query)
 	if err != nil {
@@ -134,4 +137,12 @@ func (r *RaceService) GetLastLapTime(driverNumber int) (float64, error) {
 
 func (r *RaceService) GetDriversInSession() []*domain.DriverInfo {
 	return r.drivers.GetDrivers()
+}
+
+func (r *RaceService) GetSessionResult() *domain.SessionResult {
+	result, err := r.sessions.GetSessionInfo(r.sessions.GetCurSession())
+	if err != nil {
+		fmt.Fprintln(os.Stderr, err)
+	}
+	return result
 }

@@ -26,9 +26,10 @@ func (s *SessionStorage) SaveSession(session domain.Session) error {
 		return fmt.Errorf("session already stored")
 	}
 
+
 	s.sessions[session.SessionKey] = &domain.SessionResult{
+		Circuit: session.CirtuitName,
 		SessionName: session.SessionName,
-		SessionType: session.SessionType,
 	}
 	return nil
 }
